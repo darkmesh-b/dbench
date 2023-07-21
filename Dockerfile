@@ -1,8 +1,6 @@
 # VERSION 0.1
 FROM alpine
 
-MAINTAINER Dmitry Monakhov dmonakhov@openvz.org
-
 # Install build deps + permanent dep: libaio
 RUN apk --no-cache add \
     	make \
