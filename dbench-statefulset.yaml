@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: multi-dbench
+spec:
+  serviceName: "multi-dbench"
+  selector:
+    matchLabels:
+      app: multi-dbench
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: multi-dbench
+    spec:
+      containers:
+      - name: dbench
+        image: harbor-repo.vmware.com/vcf-poc-testing/dbench/dbench
+        env:
+          - name: DBENCH_MOUNTPOINT
+            value: /data
+          # - name: DBENCH_QUICK
+          #   value: "yes"
+          # - name: FIO_SIZE
+          #   value: 1G
+          # - name: FIO_OFFSET_INCREMENT
+          #   value: 256M
+          # - name: FIO_DIRECT
+          #   value: "0"
+        volumeMounts:
+          - name: dbench-pv
+            mountPath: /data
+      volumes:
+      - name: dbench-pv
+  volumeClaimTemplates:
+  - metadata:
+      name: dbench-pv
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
