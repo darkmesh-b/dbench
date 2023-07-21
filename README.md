@@ -27,7 +27,8 @@ sudo make install
 ```
 
 5. Define an FIO file (see example.fio)
-6. Obtain the IP addresses of the pods, e.g.: `seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
+6. Obtain the IP addresses of the pods, e.g.: 
+`seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
 7. Run FIO, e.g.: `fio --client=fio_workers example.fio`
 
 * If the Persistent Volume Claim is stuck on Pending, it's likely you didn't specify a valid Storage Class. Double check using `kubectl get storageclasses`. Also check that the volume size of `1000Gi` (default) is available for provisioning.
