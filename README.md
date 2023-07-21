@@ -27,7 +27,7 @@ sudo make install
 ```
 
 5. Define an FIO file (see example.fio)
-6. Obtain the IP addresses of the pods, e.g.: 
+6. Obtain the IP addresses of the pods, e.g.: <br>
 `seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
 7. Run FIO, e.g.: `fio --client=fio_workers example.fio`
 
