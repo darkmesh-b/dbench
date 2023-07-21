@@ -7,7 +7,7 @@ Forked from https://github.com/leeliu/dbench
 1. Edit dbench-statefulset.yaml, changing `storageClassName` to match your Kubernetes provider's Storage Class `kubectl get storageclasses` and updating the number of replicaas required
 2. Deploy Dbench using: `kubectl apply -f dbench-statefulset.yaml`
 3. Once deployed, the Dbench Job will run a daemon of fio, thus creating a set of worker nodes. NOTE: pods must have routable networking
-4. Run a FIO server to run jobs on the worker nodes, see notes below
+4. Run a FIO client to run jobs on the worker nodes, see notes below
 5. Once the tests are finished, clean up using: `kubectl delete -f dbench-statefulset.yaml` and delete the volumes `k get pvc | awk '/dbench/{print $1}' | xargs -I {} kubectl delete pvc {}` that should deprovision the persistent disk and delete it to minimize storage billing.
 
 ## Notes / Troubleshooting
