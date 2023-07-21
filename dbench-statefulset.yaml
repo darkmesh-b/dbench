@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: dbench
-        image: harbor-repo.vmware.com/vcf-poc-testing/dbench/dbench
+        image: harbor-repo.vmware.com/vcf-poc-testing/multi-dbench2
         env:
           - name: DBENCH_MOUNTPOINT
             value: /data
