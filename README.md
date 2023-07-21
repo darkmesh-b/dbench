@@ -6,24 +6,29 @@ Forked from https://github.com/leeliu/dbench
 
 1. Edit dbench-statefulset.yaml, changing `storageClassName` to match your Kubernetes provider's Storage Class `kubectl get storageclasses` and updating the number of replicaas required
 2. Deploy Dbench using: `kubectl apply -f dbench-statefulset.yaml`
-3. Once deployed, the Dbench Job will:
-    * provision a Persistent Volume of `1000Gi` (default) using `storageClassName: ssd` (default)
-    * run a series of `fio` tests on the newly provisioned disk
-    * currently there are 9 tests, 15s per test - total runtime is ~2.5 minutes
-4. Follow benchmarking progress using: `kubectl logs -f job/dbench` (empty output means the Job not yet created, or `storageClassName` is invalid, see Troubleshooting below)
-5. At the end of all tests, you'll see a summary that looks similar to this:
-```
-==================
-= Dbench Summary =
-==================
-Random Read/Write IOPS: 75.7k/59.7k. BW: 523MiB/s / 500MiB/s
-Average Latency (usec) Read/Write: 183.07/76.91
-Sequential Read/Write: 536MiB/s / 512MiB/s
-Mixed Random Read/Write IOPS: 43.1k/14.4k
-```
-6. Once the tests are finished, clean up using: `kubectl delete -f dbench-statefulset.yaml` and that should deprovision the persistent disk and delete it to minimize storage billing.
+3. Once deployed, the Dbench Job will run a daemon of fio, thus creating a set of worker nodes. NOTE: pods must have routable networking
+4. Run a FIO server to run jobs on the worker nodes, see notes below
+5. Once the tests are finished, clean up using: `kubectl delete -f dbench-statefulset.yaml` and delete the volumes 'k get pvc | awk '/dbench/{print $1'} | xargs -I {} kubectl delete pvc {}' that should deprovision the persistent disk and delete it to minimize storage billing.
 
 ## Notes / Troubleshooting
+
+# FIO SERVER
+
+1. Download an Ubuntu image.
+2. Install requirements: `sudo apt install gcc make zlib1g-dev`
+3. Clone FIO: `git clone https://github.com/axboe/fio.git`
+4. Make & install FIO: 
+
+```
+cd fio
+./configure
+make
+sudo make install
+```
+
+5. Define an FIO file (see example.fio)
+6. Obtain the IP addresses of the pods, e.g.: `seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
+7. Run FIO, e.g.: `fio --client=fio_workers example.fio`
 
 * If the Persistent Volume Claim is stuck on Pending, it's likely you didn't specify a valid Storage Class. Double check using `kubectl get storageclasses`. Also check that the volume size of `1000Gi` (default) is available for provisioning.
 * It can take some time for a Persistent Volume to be Bound and the Kubernetes Dashboard UI will show the Dbench Job as red until the volume is finished provisioning.
