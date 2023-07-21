@@ -27,6 +27,10 @@ spec:
           #   value: 256M
           # - name: FIO_DIRECT
           #   value: "0"
+          # - name: FIO_RUNTIME
+          #   value: "0"
+          # - name: FIO_BLOCKSIZE
+          #   value: "0"
         volumeMounts:
           - name: dbench-pv
             mountPath: /data
