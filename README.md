@@ -15,10 +15,10 @@ Benchmark Kubernetes persistent disk volumes with [fio](https://fio.readthedocs.
 
 ### FIO CLIENT
 
-You can either login to one of the PODs (recommended) or create VM to test with.
+You can either login to one of the PODs (recommended) or create VM to test with. <br>
 If running via a POD, skip to step 5
 
-For the VM, follow steps 1-4 below 
+For the VM, follow steps 1-4 below <br>
 NOTE: pods must have routable networking if using a VM
 
 1. Download an Ubuntu (Jammy) image
