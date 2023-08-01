@@ -46,6 +46,9 @@ sudo make install
 
 9. Run FIO with the IP list and parameter file name, e.g.: `fio --client=fio_workers example.fio`
 
+
+### NOTES
+
 * If the Persistent Volume Claim is stuck on Pending, it's likely you didn't specify a valid Storage Class. Double check using `kubectl get storageclasses`.
 * It can take some time for a Persistent Volume to be Bound
 
