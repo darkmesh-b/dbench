@@ -13,7 +13,11 @@ Forked from https://github.com/leeliu/dbench
 
 ## Notes / Troubleshooting
 
-### FIO SERVER
+### FIO CLIENT
+
+You can either login to one of the PODs or create VM to test with
+
+For the VM, follow steps 1-4 below (or skip to step 5 if executing via a POD)
 
 1. Download an Ubuntu image.
 2. Install requirements: `sudo apt install gcc make zlib1g-dev`
@@ -30,12 +34,11 @@ sudo make install
 5. Define an FIO file (see example.fio)
 6. Obtain the IP addresses of the pods, e.g.: <br>
 `seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
+
 7. Run FIO, e.g.: `fio --client=fio_workers example.fio`
 
-* If the Persistent Volume Claim is stuck on Pending, it's likely you didn't specify a valid Storage Class. Double check using `kubectl get storageclasses`. Also check that the volume size of `1000Gi` (default) is available for provisioning.
-* It can take some time for a Persistent Volume to be Bound and the Kubernetes Dashboard UI will show the Dbench Job as red until the volume is finished provisioning.
-* It's useful to test multiple disk sizes as most cloud providers price IOPS per GB provisioned. So a `4000Gi` volume will perform better than a `1000Gi` volume. Just edit the yaml, `kubectl delete -f dbench.yaml` and run `kubectl apply -f dbench.yaml` again after deprovision/delete completes.
-* A list of all `fio` tests are in [docker-entrypoint.sh](https://github.com/logdna/dbench/blob/master/docker-entrypoint.sh).
+* If the Persistent Volume Claim is stuck on Pending, it's likely you didn't specify a valid Storage Class. Double check using `kubectl get storageclasses`.
+* It can take some time for a Persistent Volume to be Bound
 
 ## Contributors
 
