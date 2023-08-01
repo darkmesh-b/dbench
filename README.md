@@ -10,7 +10,8 @@ Benchmark Kubernetes persistent disk volumes with [fio](https://fio.readthedocs.
 5. Run a FIO client to run jobs on the worker nodes, see notes below
 6. Once the tests are finished, clean up using: `kubectl delete -f dbench-statefulset.yaml` and delete the volumes `k get pvc | awk '/dbench/{print $1}' | xargs -I {} kubectl delete pvc {}` 
 
-## Notes / Troubleshooting
+
+## Using FIO
 
 ### FIO CLIENT
 
@@ -39,7 +40,7 @@ sudo make install
 
 7. Log into one of the PODs or the FIO VM 
 
-8. Use VI to create two new text files, one containing the FIO parameters and the other a list of IP addresses 
+8. Use VI to create two new text files, one containing the FIO parameters and the other a list of IP addresses (copy + paste)
 
 9. Run FIO with the IP list and parameter file name, e.g.: `fio --client=fio_workers example.fio`
 
