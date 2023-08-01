@@ -38,11 +38,11 @@ sudo make install
 5. Define an FIO file (see example.fio)
 
 6. Obtain the IP addresses of the pods, e.g.: <br>
-`seq 0 15 | xargs -I {} bash -c 'kubectl get pod multi-dbench-{} --template '{{.status.podIP}}';echo' > fio_workers`
+`kubectl get pods -o wide | awk '/multi-dbench/{print $6}'`
 
 7. Log into one of the PODs or the FIO VM 
 
-8. Use VI to create two new text files, one containing the FIO parameters and the other a list of IP addresses (copy + paste)
+8. Use VI to create two new text files, one containing the FIO parameters (xxx.fio) and the other a list of IP addresses (fio_workers)
 
 9. Run FIO with the IP list and parameter file name, e.g.: `fio --client=fio_workers example.fio`
 
