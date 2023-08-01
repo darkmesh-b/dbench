@@ -32,6 +32,7 @@ make
 sudo make install
 ```
 
+### RUNNING TESTS
 
 5. Define an FIO file (see example.fio)
 
