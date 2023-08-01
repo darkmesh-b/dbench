@@ -1,11 +1,11 @@
 [global]
-runtime=3600
+runtime=360
 time_based=1
-size=2G
+size=4G
 rw=randrw
 rwmixread=70
 percentage_random=80
-#bssplit=4k/30:64k/30:32k/40
+bs=4k
 ioengine=libaio
 buffered=0
 direct=1
@@ -13,7 +13,9 @@ fsync=1
 group_reporting
 log_avg_msec=1000
 continue_on_error=all
+overwrite=1
 
 [job0]
 filename=/data/fiotest
-iodepth=10
+numjobs=8
+iodepth=1
