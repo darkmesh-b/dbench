@@ -1,6 +1,5 @@
 # multi-dbench
 Benchmark Kubernetes persistent disk volumes with [fio](https://fio.readthedocs.io/en/latest/)
-Forked from https://github.com/leeliu/dbench
 
 # Usage
 
