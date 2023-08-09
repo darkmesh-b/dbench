@@ -6,7 +6,7 @@ Benchmark Kubernetes persistent disk volumes with [fio](https://fio.readthedocs.
 1. Build the docker image using the Dockerfile supplied and upload to your local repo. This will pick up the latest version of FIO.
 2. Edit `dbench-statefulset.yaml`, updating <br>
 	(a) the container/repo location, as built above (under containers/image) <br>
-	(b) to keep things simple, the example uses the default storage class; either define a default sc or enter a storageclass as required to match your env <br>
+	(b) to keep things simple, the example uses the default storage class; either define a storageclass as required or set a default sc to match your env <br>
 	(c) finally update the number of replicas required <br>
 3. Deploy Dbench using: `kubectl apply -f dbench-statefulset.yaml`
 4. Once deployed, each POD will run a daemon of fio, thus creating a set of worker nodes. 
