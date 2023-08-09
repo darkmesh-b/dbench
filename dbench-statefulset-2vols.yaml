@@ -34,6 +34,7 @@ spec:
       name: dbench-pv-1
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nil
       resources:
         requests:
           storage: 10Gi
@@ -41,6 +42,7 @@ spec:
       name: dbench-pv-2
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nil
       resources:
         requests:
           storage: 10Gi
